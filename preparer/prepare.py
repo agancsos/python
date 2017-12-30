@@ -44,16 +44,16 @@ class PREPARER:
 			print("Disk Count   : {0}".format( self.disk_count));
 		try:
 			for season_index in range(int(self.season_value),int(self.season_value) + int(self.max_seasons)):
-				if not self.silent:
-					print("Creating season {0}".format(season_index));
 				if not os.path.exists("./SEASON_{0}".format(season_index)):
+					if not self.silent:
+						print("Creating season {0}".format(season_index));
 					os.mkdir("./SEASON_{0}".format(season_index));
 				if not self.silent:
 					print("Preparing disks for season {0}".format(season_index));
 				for disk_index in range(int(self.disk_count)):
-					if not self.silent:
-						print("Creating disk {0} for season {1}".format(disk_index + 1,season_index));
 					if not os.path.exists("./SEASON_{0}/DISK_{1}".format(season_index,disk_index + 1)):
+						if not self.silent:
+							print("Creating disk {0} for season {1}".format(disk_index + 1,season_index));
 						os.mkdir("./SEASON_{0}/DISK_{1}".format(season_index,disk_index + 1));
 					pass;
 				pass;
