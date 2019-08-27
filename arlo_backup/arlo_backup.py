@@ -9,8 +9,8 @@ class ArloCameraService:
 	base_endpoint_url = "";
 	target_path = "";
 	delete = False;
-	username = "gancsosa@gmail.com";
-	password = "AlphaC!0n#123";
+	username = "";
+	password = "";
 	token = "";
 
 	def __init__(self):
