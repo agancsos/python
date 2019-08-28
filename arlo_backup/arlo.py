@@ -4,7 +4,7 @@ import sys;
 from datetime import datetime;
 from datetime import timedelta;
 import requests;
-
+ 
 class ArloCameraService:
 	base_endpoint_url = "";
 	target_path = "";
