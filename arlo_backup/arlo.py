@@ -12,7 +12,7 @@ class ArloCameraService:
 	username = "";
 	password = "";
 	token = "";
- 
+
 	def __init__(self):
 		self.base_endpoint_url = "https://arlo.netgear.com/hmsweb/";
 	def day_folder(self):
