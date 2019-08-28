@@ -8,7 +8,7 @@ import requests;
 class ArloCameraService:
 	base_endpoint_url = "";
 	target_path = "";
-	delete = False;
+	delete = False; 
 	username = "";
 	password = "";
 	token = "";
