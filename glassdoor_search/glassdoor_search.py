@@ -21,7 +21,7 @@ class GlassdoorHelper:
         assert self.company != "", "Company cannot be empty...";
         if (self.operation == "ranking"):
             if (self.base_url == ""):
-                rsp = requests.post("https://www.glassdoor.com/Reviews/new-york-city-{0}-reviews-SRCH_IL.0,13_IM615_KE14,30.htm"\
+                rsp = requests.post("https://www.glassdoor.com/Reviews/{0}-reviews-SRCH_KE.0,7.htm" \
                     .format(self.keyword_search), json={"sc.keyword": self.company}, headers={"User-Agent":"PostmanRuntime/7.26.8"});
                 m = re.compile(r'Working-at[^"]+"'.format(self.company)).findall(str(rsp.content));
                 company_id = None;
