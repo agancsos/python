@@ -11,14 +11,14 @@ class GlassdoorHelper:
         self.operation = params["-o"] if "-o" in params.keys() else "ranking";
         self.company = params["-c"] if "-c" in params.keys() else r'Google';
         self.base_url = params["-b"] if "-b" in params.keys() else "";
-        search_index = 0;
-        comps = self.company.split(" ");
-        search_index = 2 if len(comps) > 2 else 0;
-        self.keyword_search = "-".join(self.company.split(" ")[:2])
         pass;
     def invoke(self):
         assert self.operation != "", "Operation cannot be empty...";
         assert self.company != "", "Company cannot be empty...";
+        search_index = 0;
+        comps = self.company.split(" ");
+        search_index = 2 if len(comps) > 2 else 0;
+        self.keyword_search = "-".join(self.company.split(" ")[:2])
         if (self.operation == "ranking"):
             if (self.base_url == ""):
                 rsp = requests.post("https://www.glassdoor.com/Reviews/{0}-reviews-SRCH_KE.0,7.htm" \
