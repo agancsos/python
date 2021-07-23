@@ -9,7 +9,7 @@ class GlassdoorHelper:
     operation=None;company=None;base_url=None;keyword_search=None;
     def __init__(self, params=dict()):
         self.operation = params["-o"] if "-o" in params.keys() else "ranking";
-        self.company = params["-c"] if "-c" in params.keys() else r'Quicken Loans';
+        self.company = params["-c"] if "-c" in params.keys() else r'';
         self.base_url = params["-b"] if "-b" in params.keys() else "";
         self.keyword_search = params["-k"] if "-k" in params.keys() else "";
         pass;
