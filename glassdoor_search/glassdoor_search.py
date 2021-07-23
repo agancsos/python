@@ -1,5 +1,5 @@
 ###############################################################################
-# Name      : glassdoor_search                                                #
+# Name      : glass_door                                                      #
 # Author    : Abel Gancsos                                                    #
 # Version   : 1.0.0.0                                                         #
 ###############################################################################
@@ -9,19 +9,21 @@ class GlassdoorHelper:
     operation=None;company=None;base_url=None;keyword_search=None;
     def __init__(self, params=dict()):
         self.operation = params["-o"] if "-o" in params.keys() else "ranking";
-        self.company = params["-c"] if "-c" in params.keys() else r'Google';
+        self.company = params["-c"] if "-c" in params.keys() else r'Quicken Loans';
         self.base_url = params["-b"] if "-b" in params.keys() else "";
+        self.keyword_search = params["-k"] if "-k" in params.keys() else "";
         pass;
     def invoke(self):
         assert self.operation != "", "Operation cannot be empty...";
         assert self.company != "", "Company cannot be empty...";
-        search_index = 0;
+        earch_index = 0;
         comps = self.company.split(" ");
         search_index = 2 if len(comps) > 2 else 0;
-        self.keyword_search = "-".join(self.company.split(" ")[:2])
+        if self.keyword_search == "":
+            self.keyword_search = "-".join(self.company.split(" ")[:2])
         if (self.operation == "ranking"):
             if (self.base_url == ""):
-                rsp = requests.post("https://www.glassdoor.com/Reviews/{0}-reviews-SRCH_KE.0,7.htm" \
+                rsp = requests.post("https://www.glassdoor.com/Search/results.htm?keyword={0}" \
                     .format(self.keyword_search), json={"sc.keyword": self.company}, headers={"User-Agent":"PostmanRuntime/7.26.8"});
                 m = re.compile(r'Working-at[^"]+"'.format(self.company)).findall(str(rsp.content));
                 company_id = None;
@@ -32,9 +34,9 @@ class GlassdoorHelper:
                 if company_id is not None:
                     rsp = requests.get("https://www.glassdoor.com/Overview/{0}".format(company_id), headers={"User-Agent":"PostmanRuntime/7.26.8"});
             else:
+                print(self.base_url);
                 rsp = requests.get(self.base_url, headers={"User-Agent":"PostmanRuntime/7.26.8"});
             if (rsp != None):
-                #print(rsp.content);
                 m = re.compile(r'"ratingValue"\s*:\s*"[^"]+"').findall(str(rsp.content));
                 if (len(m) > 0):
                     comps = m[0].split(":");
