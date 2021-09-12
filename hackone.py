@@ -32,7 +32,7 @@ class HackerOner:
 		## Lists Pentesters (Hackers) by ranking with their reputation score
 		elif (self.mode == "hackers"):
 			rsp = session.get("{0}/leaderboard/reputation".format(self.base_endpoint), headers=self.headers, allow_redirects=False);
-			rsp.html.render(sleep=10);
+			rsp.html.render(sleep=self.sleep);
 			hs = rsp.html.find("img");
 			stats = rsp.html.find("td");
 			rank = 1;
