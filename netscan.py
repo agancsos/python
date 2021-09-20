@@ -22,7 +22,7 @@ class NetScanner:
         pass;
     def scan_ports(self, ip):
         info = NetInfo(ip);
-        for port in range(22, 9999999):
+        for port in range(22, 5024):
             rsp = os.system("nc -zw{0} {1} {2} > /dev/null 2>&1".format(self.wait, ip, port));
             if rsp == 0 and port not in info.ports: info.ports.append(port);
         if (self.cache[info.ip] == None): self.cache[info.ip] = info;
