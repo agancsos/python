@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 ###############################################################################
-# Name		: gdb_umdh.py												 #
-# Author	  : Abel Gancsos												  #
-# Version	 : v. 1.0.0.0													#
-# Description : Compares 2 gdb dumps for memory leaks.						#
+# Name		: gdb_umdh.py					              #
+# Author	: Abel Gancsos	             				      #
+# Version       : v. 1.0.0.0						      #
+# Description   : Compares 2 gdb dups for memory leaks.			      #
 ###############################################################################
 import os, sys, subprocess;
 
