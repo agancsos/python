@@ -15,7 +15,7 @@ class GDBEntry:
 class GDBParser:
     trace_path=None;entries=None;verbose=None;
     def __init__(self, params=dict()):
-        self.trace_path = params["-f"] if "-f" in params.keys() else "/Volumes/exodus/stuff/ENG/documents/Unix Agent/gdb_trace.log";
+        self.trace_path = params["-f"] if "-f" in params.keys() else "";
         self.verbose = True if "-v" in params.keys() and int(params["-v"]) > 0 else False;
         assert self.trace_path != "" and os.path.exists(self.trace_path), "Trace path cannot be empty and must exist...";
         self.entries = dict();
