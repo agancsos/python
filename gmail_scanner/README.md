@@ -13,6 +13,9 @@ GMailScanner is a small program that helsp scan GMAIL email messages for spam an
 * User may or may not have spam and/or malicious emails.
 * User may or may not have multiple folders in their mailbox.
 * User has a configuration file.
+* User has access to GCP.
+* User has a project in GCP.
+* User grants the project access to their GMail account.
  
 ## Requirements
 * The program will provide the user with an option for continuous scanning.
