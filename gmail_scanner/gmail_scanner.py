@@ -62,7 +62,7 @@ class GmailScanner:
 		rsp += "<tr><th>Title</th><th>Flagged Words</th></tr>";
 		for x in raw.s_records: rsp += "<tr style='background-color:rgb(50, 0, 0);'><td>{0}</td><td>{1}</td></tr>".format(x.title, ",".join(x.flagged_words));
 		for x in raw.w_records: rsp += "<tr style='background-color:rgb(204,204,0);'><td>{0}</td><td>{1}</td></tr>".format(x.title, ",".join(x.flagged_words));
-		rsp += "</table><center>&copy; {0} Abel Gancsos <br/>All Rights Reserved</center></body></html".format(datetime.datetime.today().year);
+		rsp += "</table></body></html".format(datetime.datetime.today().year);
 		return rsp;
 	def invoke_service(self):
 		while True:
