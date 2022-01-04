@@ -17,7 +17,7 @@ The purpose of these tool is simply to be able to batch search the Indeed databa
 * Search results may or may not having multiple pages.
 
 ## Implementation Details
-The tools is implemented using 3 core packages as well as 2 custom classes.
+The tool is implemented using 3 core packages as well as 2 custom classes.
 
 ### Packages
 Other than a few minor packages, the main ones are as follows.
