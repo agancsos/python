@@ -35,7 +35,7 @@ class RenameFile(UnitTest):
         return result % 1000000007;            ## Typical when using large values.  HackerRank does this often.
     pass;
   
-  if __name__ == "__main__":
+if __name__ == "__main__":
     test1 = RenameFile(27);
     print(test1.invoke({"newName":"abc", "oldName":"aaabbbccc"}));
 
