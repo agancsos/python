@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###############################################################################
-# Name        : int_problem_solving.py                                        #
+# Name        : rename_file.py                                                #
 # Author      : Abel Gancsos                                                  #
 # Version     : v. 1.0.0.0                                                    #
 # Description :                                                               #
@@ -36,8 +36,8 @@ class RenameFile(UnitTest):
     pass;
   
 if __name__ == "__main__":
-    test1 = RenameFile(27);
-    print(test1.invoke({"newName":"abc", "oldName":"aaabbbccc"}));
+    test1a = RenameFile(27);
+    print(test1a.invoke({"newName":"abc", "oldName":"aaabbbccc"}));
 
     test1b = RenameFile(4);
     print(test1b.invoke({"newName":"ccc", "oldName":"cccc"}));
