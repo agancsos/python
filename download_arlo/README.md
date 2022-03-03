@@ -44,7 +44,7 @@ def auth(self):
     rsp = self.session.get(endpoint.replace("auth", "validateAccessToken?data={0}".format(int(time.time()))), headers=self.headers);
     self.headers["Authorization"] = self.token;
     self.headers["Host"] = "myapi.arlo.com";
-    rsp = self.session.get("https://myapi.arlo.com/hmsweb/users/session/v3?eventId=FE!91b15979-6e3c-41b8-b115-e71c64f7ef81&time={0}".format(int(time.time())), headers=self.headers);
+    rsp = self.session.get("https://myapi.arlo.com/hmsweb/users/session/v3?time={0}".format(int(time.time())), headers=self.headers);
 ```
 Note that:
 * We use a completely different endpoint for auth.  This is by design.
