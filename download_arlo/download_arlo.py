@@ -47,9 +47,9 @@ class Downloader:
 	def download(self, recording): return False;
 	def remove_recording(self, recording): return False;
 	def invoke(self):
-		#assert self.base_endpoint != "", "Base endpoint cannot be empty...";
-		#assert self.username      != "", "Username cannot be empty...";
-		#assert self.password      != "", "Password cannot be empty...";
+		assert self.base_endpoint != "", "Base endpoint cannot be empty...";
+		assert self.username      != "", "Username cannot be empty...";
+		assert self.password      != "", "Password cannot be empty...";
 		self.auth();
 		if self.token != None:
 			for device in self.list_devices():
