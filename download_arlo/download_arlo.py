@@ -38,7 +38,7 @@ class Downloader:
 		rsp = self.session.get(endpoint.replace("auth", "validateAccessToken?data={0}".format(int(time.time()))), headers=self.headers);
 		self.headers["Authorization"] = self.token;
 		self.headers["Host"] = "myapi.arlo.com";
-		rsp = self.session.get("https://myapi.arlo.com/hmsweb/users/session/v3?eventId=FE!91b15979-6e3c-41b8-b115-e71c64f7ef81&time={0}".format(int(time.time())), headers=self.headers);
+		rsp = self.session.get("https://myapi.arlo.com/hmsweb/users/session/v3?time={0}".format(int(time.time())), headers=self.headers);
 	def list_recordings(self, device): print(device["deviceName"]);
 	def list_devices(self):
 		endpoint = "{0}/v2/users/devices".format(self.base_endpoint);
