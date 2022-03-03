@@ -61,7 +61,7 @@ https://myapi.arlo.com/hmsweb
 |https://ocapi-app.arlo.com/api/getFactors               | GET              | ?data=<timestamp>                                                                |
 |https://ocapi-app.arlo.com/api/startAuth                | POST             | {"factorId":""}                                                                  |
 |https://ocapi-app.arlo.com/api/finishAuth               | POST             | {"factorAuthCode":"","otp":""}                                                   |
-|https://ocapi-app.arlo.com/api/validateAccessToken      | GET              | ?data=<timestamp>                                                                |
+|https://ocapi-app.arlo.com/api/validateAccessToken      | GET              | ?time=<timestamp>                                                                |
 |v2/users/devices                                        | GET              | -                                                                                |
 
 
