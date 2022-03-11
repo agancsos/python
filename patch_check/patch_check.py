@@ -39,7 +39,7 @@ class LinuxPatcher:
         for update in updates:
             comps = [i for i in update.strip().split(" ") if i != ""];
             if len(comps) < 3 or comps[0] == "*": continue;
-            if comps[2] in ["@base", "epel", "base"] and len([i for i in self.ignore_list if i in comps[0]]) == 0:
+            if comps[2] in ["@base", "epel", "base", "security"] and len([i for i in self.ignore_list if i in comps[0]]) == 0:
                 print("\033[1;34mUpdating: '{0};{1}'\033[m".format(comps[0], comps[1]));
                 if not self.debug:
                     if "CentOS" in platform or "RHEL" in platform: rsp = self.remote_command("yum upgrade -y {0}".format(comps[0]));
