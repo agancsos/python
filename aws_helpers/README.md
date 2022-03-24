@@ -53,6 +53,7 @@ The signature is a 256-encoded hmac of the canonical request.
     * The version flag should only be used if a function was implemented in a specific version or a specific implementation of an existing function is required.
 
 ## Closing thoughts
+* Overall, try to use the CLI if possible since all the functionality is already implemented for you in a batchable form.
 * If leveraging AWS through a single programming language, stick with the SDK.
 * If leveraging AWS through multiple programming languages and want to make a standard, try to keep it as simple as possible, as with all code.
     * It may also help to break up components into separate modules
