@@ -5,11 +5,13 @@
 # Version     : v. 1.0.0.0                                                    #
 # Description : Helpers to connect to an AWS environment.                     #
 ###############################################################################
-import requests_html, datetime, base64, hmac, hashlib, urllib.parse;
+import requests_html, datetime, base64, hmac, hashlib, urllib.parse, logging;
 
 class AWSClient:
 	base_endpoint=None;username=None;password=None;client=None;debug=None;force=None;
 	def __init__(self, params=dict()):
+		logging.basicConfig(format="%(asctime)s %(message)s";
+		logger                 = logging.getLogger(__name__);
 		self.base_endpoint     = params["-b"] if "-b" in params.keys() else "https://ec2.us-east-2.amazonaws.com";
 		self.username          = params["-u"] if "-u" in params.keys() else "";
 		self.password          = params["-p"] if "-p" in params.keys() else "";
@@ -32,11 +34,5 @@ class AWSClient:
 			"X-AMZ-DATE":timestamp.strftime("%Y%m%dT%H%M%SZ"),
 			"Authorization":"AWS4-HMAC-SHA256 Credential={0}/{1}, SignedHeaders=host;x-amz-date, Signature={2}".format(self.username, scope, signature)};
 		if method == "GET": return self.client.get("{0}/?Action={1}{2}&Version=2016-11-15".format(self.base_endpoint, action, "&{0}".format(args) if args != None else ""), headers=headers);
-	def log(self, msg, level=3):
-		if level == 1: print("\033[31;1m{0} ERR   {1}\033[0m".format(datetime.datetime.now(), msg));
-		elif level == 2: print("\033[35;1m{0} WARN  {1}\033[0m".format(datetime.datetime.now(), msg));
-		elif level == 3: print("\033[33;1m{0} INFO  {1}\033[0m".format(datetime.datetime.now(), msg)); 
-		elif level == 4: print("\033[34;1m{0} VERB  {1}\033[0m".format(datetime.datetime.now(), msg));
-		else: print("{0} DEBUG {1}".format(datetime.datetime.now(), msg));
 	pass;
 
