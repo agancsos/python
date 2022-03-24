@@ -8,10 +8,10 @@
 import requests_html, datetime, base64, hmac, hashlib, urllib.parse, logging;
 
 class AWSClient:
-	base_endpoint=None;username=None;password=None;client=None;debug=None;force=None;
+	base_endpoint=None;username=None;password=None;client=None;debug=None;force=None;logger=None;
 	def __init__(self, params=dict()):
 		logging.basicConfig(format="%(asctime)s %(message)s";
-		logger                 = logging.getLogger(__name__);
+		self.logger            = logging.getLogger(__name__);
 		self.base_endpoint     = params["-b"] if "-b" in params.keys() else "https://ec2.us-east-2.amazonaws.com";
 		self.username          = params["-u"] if "-u" in params.keys() else "";
 		self.password          = params["-p"] if "-p" in params.keys() else "";
