@@ -8,17 +8,14 @@
 import boto3, os, sys, logging;
 
 class AWSService:
-	base_endpoint=None;username=None;password=None;client=None;debug=None;force=None;logger=None;service=None;region=None;ignored_instances=None;
+	params=None;client=None;debug=None;force=None;logger=None;service=None;region=None;
 	def __init__(self, params=dict()):
-		logging.basicConfig(format="%(asctime)s %(message)s");
+		logging.basicConfig(format="%(asctime)s %(levelname)s  %(message)s", level="INFO");
 		self.logger            = logging.getLogger(__name__);
 		self.params            = params;
 		self.ignored_instances = params["--ignored"].split(",") if "--ignored" in params.keys() else list();
 		self.service           = params["-s"] if "-s" in params.keys() else "ec2";
 		self.region            = params["-r"] if "-r" in params.keys() else "us-east-1";
-		self.base_endpoint     = params["-b"] if "-b" in params.keys() else "https://ec2.us-east-2.amazonaws.com";
-		self.username          = params["-u"] if "-u" in params.keys() else "";
-		self.password          = params["-p"] if "-p" in params.keys() else "";
 		self.client            = boto3.client(self.service, self.region);
 	def invoke(self):
 		instances = self.client.describe_hosts();
