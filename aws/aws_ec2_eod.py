@@ -8,7 +8,7 @@
 import boto3, os, sys, logging;
 
 class AWSService:
-	params=None;client=None;debug=None;force=None;logger=None;service=None;region=None;
+	params=None;client=None;debug=None;force=None;logger=None;service=None;region=None;ignored_instances=None;
 	def __init__(self, params=dict()):
 		logging.basicConfig(format="%(asctime)s %(levelname)s  %(message)s", level="INFO");
 		self.logger            = logging.getLogger(__name__);
