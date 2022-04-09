@@ -10,9 +10,14 @@ from requests.auth import HTTPBasicAuth;
 class JenkinsSession:
     base_endpoint=None;username=None;pam=None;session=None;credential=None;
     def __init__(self, params=dict()):
-        self.base_endpoint = params["-b"] if "-b" in params.keys() else "http://localhost:8080";
-        self.username      = params["-u"] if "-u" in params.keys() else "";
-        self.password      = params["-p"] if "-p" in params.keys() else "";
+        raw_config         = None;
+        if not os.path.exists("{0}/.jenkins.json".format(os.environ["HOME"])):
+            with open("{0}/.jenkins.json".format(os.environ["HOME"]), "w") as fh: fh.write('{"username":"", "pam":"", "baseEndpoint":""}');
+        with open("{0}/.jenkins.json".format(os.environ["HOME"]), "r") as fh: raw_config = fh.read();
+        config             = json.loads(raw_config);
+        self.base_endpoint = params["-b"] if "-b" in params.keys() else config["baseEndpoint"];
+        self.username      = params["-u"] if "-u" in params.keys() else config["username"];
+        self.password      = params["-p"] if "-p" in params.keys() else config["pam"];
         self.session       = requests_html.HTMLSession();
         self.credential    = HTTPBasicAuth(self.username, self.password);
     def trigger_job(self, name, delay_seconds=0):
@@ -55,4 +60,4 @@ if __name__ == "__main__":
     elif operation == "log"   : print(session.get_job_log("Test1", build_num));
     elif operation == "delete": print(session.delete_job_run("Test1", build_num));
     elif operation == "list"  : print(session.list_jobs());
-        
+
