@@ -9,11 +9,12 @@ import os, sys, boto3, logging;
 logging.basicConfig(format="%(asctime)s %(levelname)s %(message)s", level="INFO");
 
 class AwsService:
-    accounts=None;search=None;logger=None;
+    accounts=None;search=None;logger=None;role_name=None;
     def __init__(self, params=dict()):
         self.logger              = logging.getLogger(__name__);
         self.accounts            = params["--accounts"].split(",") if "--accounts" in params.keys() else [];
         self.search              = params["--search"] if "--search" in params.keys() else "";
+        self.role_name           = params["--role"] if "--role" in params.keys() else "";
     def get_assumed_session(self, arn, session_name="aws_runner"):
         client     = boto3.client("sts");
         rsp        = client.assume_role(RoleArn=arn, RoleSessionName=session_name);
@@ -22,7 +23,7 @@ class AwsService:
         return session;
     def invoke(self):
         for account in self.accounts:
-            session   = self.get_assumed_session("arn:aws:iam::{0}:role/amg-developer".format(account));
+            session   = self.get_assumed_session("arn:aws:iam::{0}:role/{1}".format(account, self.role_name));
             client    = session.client("s3");
             buckets   = client.list_buckets()["Buckets"];
             for bucket in buckets:
