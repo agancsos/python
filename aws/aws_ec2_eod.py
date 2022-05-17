@@ -18,11 +18,12 @@ class AWSService:
 		self.region            = params["-r"] if "-r" in params.keys() else "us-east-1";
 		self.client            = boto3.client(self.service, self.region);
 	def invoke(self):
-		instances = self.client.describe_hosts();
-		for instance in instances["Hosts"]:
-			if instance["State"] != "Terminated" and instance["Name"] not in self.ignored_instances:
-				print(instance["InstanceId"]);
-				if not self.debug: self.client.terminate_instance(instance["InstanceId"]);
+		instances = self.client.describe_instances();
+		for reservation in instances["Reservations"]:
+			for instance in reservation["Instances"]:
+				if instance["State"]["Name"] != "stopped" and instance["InstanceId"] not in self.ignored_instances:
+					print(instance["InstanceId"]);
+					if not self.debug: self.client.stop_instances(InstanceIds=[instance["InstanceId"]]);
 	pass;
 
 if __name__ == "__main__":
