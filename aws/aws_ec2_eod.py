@@ -18,6 +18,7 @@ class AWSService:
 		self.region            = params["-r"] if "-r" in params.keys() else "us-east-1";
 		self.terminate         = True if "--terminate" in params.keys() and int(params["--terminate"]) > 0 else False;
 		self.client            = boto3.client(self.service, self.region);
+		self.debug             = False if "--debug" in params.keys() and int(params["--debug"]) < 1 else True;
 	def invoke(self):
 		instances = self.client.describe_instances();
 		for reservation in instances["Reservations"]:
