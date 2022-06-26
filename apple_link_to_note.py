@@ -21,5 +21,5 @@ if __name__ == "__main__":
 	notes                      = cursor.fetchall();
 	for note in notes:
 		if note_name == "" or note_name in note[1]:
-			logger.info("{0}: {1}".format(note[1], note[0]));
+			logger.info("{0}: otes://showNote?identifier={1}".format(note[1], note[0]));
 
