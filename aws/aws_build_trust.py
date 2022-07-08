@@ -69,8 +69,8 @@ if __name__ == "__main__":
 						temp_roles.append(source_role);
 						statement["Principal"]["AWS"] = temp_roles;
 						break;
-		if not debug:
-			pass;
+		if not debug: client.update_assume_role_policy(RoleName=role["RoleName"], PolicyDocument="{0}".format(role["AssumeRolePolicyDocument"]));
 		else: logger.info(role["AssumeRolePolicyDocument"]);
+		logger.info("Please ensure that source Account grants source Role sts:AssumeRole to target Role");
 	except Exception as ex: logger.error(ex);
 
