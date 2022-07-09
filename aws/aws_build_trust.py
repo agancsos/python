@@ -19,13 +19,13 @@ def create_trust_role(client, source_arn, target_arn, tags=[]):
 	client.create_role(RoleName=role_name,
 		AssumeRolePolicyDocument="{0}".format({
 			"Version": "2012-10-17",
-			 "Statement": [ {
+			 "Statement": [{
 				"Effect": "Allow",
 				"Prinicpal": {
 					 "AWS": [source_role]
 				},
 				"Action": "sts:AssumeRole"
-			]},
+			}],
 			 "MaxSessionDuration": 43200
 		}), Tags=tags);
 
@@ -52,8 +52,8 @@ if __name__ == "__main__":
 			create_trust_role(client, source_role, target_role, tags);
 		else:
 			logger.info("Found Target Role ({0}).  Scanning for Trust Relationships...".format(target_role));
-			role = next(x for x in all_roles if x["Arn"] == target_role);
-			for statement in role["AssumeRolePolicyDocument"]["Statement"]:
+			c_role = next(x for x in all_roles if x["Arn"] == target_role);
+			for statement in c_role["AssumeRolePolicyDocument"]["Statement"]:
 				if "AWS" not in statement["Principal"].keys(): continue;
 				if isinstance(statement["Principal"]["AWS"], list):
 					if not any(x == source_role for x in statement["Principal"]["AWS"]):
@@ -73,16 +73,22 @@ if __name__ == "__main__":
 						statement["Principal"]["AWS"] = temp_roles;
 						break;
 		if not debug: client.update_assume_role_policy(RoleName=role["RoleName"], PolicyDocument="{0}".format(role["AssumeRolePolicyDocument"]));
-		else: logger.info(role["AssumeRolePolicyDocument"]);
+		else: logger.info(c_role["AssumeRolePolicyDocument"]);
 
 		## Ensure that source Role has the permissions
 		logger.info("Checking sts:AssumeRole permissions for source Role...");
+		session         = None;
 		session         = aws_session("arn:aws:iam::{0}:role/{1}".format(extract_account_from_arn(source_role), role));
 		client          = session.client("iam",  region, config=Config(read_timeout=timeout, connect_timeout=timeout));
-		all_policies    = client.list_role_policies(RoleName=source_role.split("/")[1]);
+		all_policies    = client.list_role_policies(RoleName=source_role.split("/")[1])["PolicyNames"];
 		found           = False;
-		for policy in all_policies:
-			if not any("sts:AssumeRole" in x["Action"] or "*" == x["Resource"] or target_role in x["Resource"] for x in policy["Statement"]):
+		for p in all_policies:
+			f_policy = client.get_role_policy(RoleName=source_role.split("/")[1], PolicyName=p);
+			policy   = f_policy["PolicyDocument"];
+			logger.info("Scanning Policy: {0}".format(f_policy["PolicyName"]));
+			if not any("sts:AssumeRole" in x["Action"] \
+				or (isinstance(x["Resource"], list) and target_role in x["Resource"]) \
+				or (isinstance(x["Resource"], str) and x["Resource"] == "*") for x in policy["Statement"]):
 				continue;
 			if any(("*" == x["Resource"] or target_role in x["Resource"]) and "sts:AssumeRole" in x["Action"] for x in policy["Statement"]):
 				logger.info("Source Role should already have permissions");
@@ -92,14 +98,16 @@ if __name__ == "__main__":
 			found     = True;
 			if "sts:AssumeRole" in statement["Action"]:
 				statement["Resource"].append(target_role);
-				if not debug: client.put_role_policy(RoleName=source_role.split("/")[1], PolicyName=policy["PolicyName"], PolicyDocument="{0}".format(policy));
+				if not debug: client.put_role_policy(RoleName=source_role.split("/")[1], PolicyName=f_policy["PolicyName"], PolicyDocument="{0}".format(policy));
 				break;
 			else:
 				if isinstance(statement["Action"], list): statement["Action"].append("sts:AssumeRole");
 				else: statement["Action"] = [statement["Action"], "sts:AssumeRole"];
-				if not debug: client.put_role_policy(RoleName=source_role.split("/")[1], PolicyName=policy["PolicyName"], PolicyDocument="{0}".format(policy));
+				if not debug: client.put_role_policy(RoleName=source_role.split("/")[1], PolicyName=f_policy["PolicyName"], PolicyDocument="{0}".format(policy));
 				break;
 		if not found:
 			logger.warning("Sorry, no Policy found with sts:AssumeRole in source Account.  Permissions will need to be added manually..");
-	except Exception as ex: logger.error(ex);
+		else:
+			if debug: logger.info(policy);
+	except Exception as ex: logger.error(ex); raise ex;
 
