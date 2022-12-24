@@ -38,7 +38,7 @@ class HunterHelpers:
 		return rst;
 	def report_number(owner_info):
 		client = requests.Session();
-		return client.post(HunterHelpers, headers={
+		return client.post(HunterHelpers.BASE_REPORT_URL, headers={
 			"User-Agent": "PostmanRuntime/7.26.8"
 		}, json={
 			"company-phone-number": str(owner_info["number"]),
