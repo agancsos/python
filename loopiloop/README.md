@@ -33,7 +33,7 @@ In both cases, we also attempt to clear the command history to reduce the paper 
 | Flag                  | Description                                                           |
 |--|--|
 | --debug               | Prevent any system changes.                                           |
-| --op                  | Determines which phase will be invoked. (exploit | antidote).         | 
+| --op                  | Determines which phase will be invoked. (exploit or antidote).        | 
 
 ## References
 * https://unix.stackexchange.com/questions/66197/how-to-cause-kernel-panic-with-a-single-command
