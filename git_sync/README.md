@@ -37,7 +37,7 @@ The utility is implemented as a Python CLI that takes in the required fields via
 hosts:
   "192.168.1.123":
     "username": ""
-	"pat": "base64(<username>:<password>)"
+    "pat": "base64(<username>:<password>)"
 ```
 
 ### JSON Inventory
