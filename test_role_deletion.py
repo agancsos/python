@@ -70,3 +70,9 @@ if __name__ == "__main__":
 			client2 = session2.client("s3");
 		except Exception as ex2:
 			log.info(ex2);
+    log.info("Closing client and attempting to refresh...");
+    client2.close();
+    try:
+        client2 = session2.client("iam");
+    except Exception as ex:
+        log.info(ex);
