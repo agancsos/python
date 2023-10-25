@@ -51,6 +51,7 @@ if __name__ == "__main__":
 	log.info("Updating IAM Role session duration...");
 	client1.update_role(RoleName=role_name2, MaxSessionDuration=43200);
 	time.sleep(10);
+	role2 = client1.get_role(RoleName=role_name2);
 
 	log.info("Performing smoke test on new role with {0} seconds...".format(role2["Role"]["MaxSessionDuration"]));
 	session2 = aws_session("arn:aws:iam::{0}:role/{1}".format(account, role_name2), ttl=int(role2["Role"]["MaxSessionDuration"] / 60));
