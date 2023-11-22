@@ -17,9 +17,12 @@ if __name__ == "__main__":
 	notes_db_path              = "{0}/Library/Group Containers/group.com.apple.notes/NoteStore.sqlite".format(os.environ["HOME"]);
 	client                     = sqlite3.connect(notes_db_path);
 	cursor                     = client.cursor();
-	cursor.execute("select zidentifier, ztitle1 from ZICCLOUDSYNCINGOBJECT where ztitle1 is not null");
+	cursor.execute("select zidentifier, ztitle1, zfolder from ZICCLOUDSYNCINGOBJECT where ztitle1 is not null");
 	notes                      = cursor.fetchall();
 	for note in notes:
 		if note_name == "" or note_name in note[1]:
-			logger.info("{0}: notes://showNote?identifier={1}".format(note[1], note[0]));
+			cursor2 = client.cursor();
+			cursor2.execute("select ztitle2 from ZICCLOUDSYNCINGOBJECT where z_pk = '{0}'".format(note[2]));
+			folder  = cursor2.fetchall()[0];
+			logger.info("{0}/{1}: notes://showNote?identifier={1}".format(folder[0], note[1], note[0]));
 
