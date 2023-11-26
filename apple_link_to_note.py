@@ -24,5 +24,5 @@ if __name__ == "__main__":
 			cursor2 = client.cursor();
 			cursor2.execute("select ztitle2 from ZICCLOUDSYNCINGOBJECT where z_pk = '{0}'".format(note[2]));
 			folder  = cursor2.fetchall()[0];
-			logger.info("{0}/{1}: notes://showNote?identifier={1}".format(folder[0], note[1], note[0]));
+			logger.info("{0}/{1}: notes://showNote?identifier={2}".format(folder[0], note[1], note[0]));
 
